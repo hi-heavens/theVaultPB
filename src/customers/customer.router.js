@@ -3,7 +3,7 @@ const {
   createAccount,
   accountValidation,
   getAllAccounts,
-} = require("../controllers/customer.controller");
+} = require("./customer.controller");
 
 const router = express.Router();
 

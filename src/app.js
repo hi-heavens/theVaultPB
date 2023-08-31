@@ -1,7 +1,7 @@
 const express = require("express");
 const compression = require("compression");
 const helmet = require("helmet");
-const theCustomerRouter = require("./routes/customer.router");
+const theCustomerRouter = require("./customers/customer.router");
 
 const app = express();
 
