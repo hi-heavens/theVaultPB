@@ -4,26 +4,36 @@ const fetchAccountsData = require("../services/fetchAccountsData");
 const isValidDate = require("../services/isValidDate");
 const removeDOB = require("../services/removeDOB");
 
+const validAccountTypes = ["Savings", "Checking", "Current"];
+
 function createAccount(req, res) {
   const { holderName, dob, accountType, initialBalance } = req.body;
 
   if (!holderName || !dob || !accountType || initialBalance === undefined) {
     return res
       .status(400)
-      .json({ status: "failed", error: "Missing/Invalid input data" });
+      .json({ status: "failed", message: "Missing/Invalid input data" });
   }
 
   const isValid = isValidDate(dob);
   if (!isValid) {
     return res
       .status(400)
-      .json({ status: "failed", error: "Invalid date of birth" });
+      .json({ status: "failed", message: "Invalid date of birth" });
+  }
+
+  if (!validAccountTypes.includes(accountType)) {
+    return res.status(400).json({
+      status: "failed",
+      message:
+        "Invalid account type. Valid account types are Savings, Checking, Current",
+    });
   }
 
   if (initialBalance < 0) {
     return res.status(400).json({
       status: "failed",
-      error: "Initial balance cannot be less than 0",
+      message: "Initial balance cannot be less than 0",
     });
   }
 
@@ -50,7 +60,7 @@ function accountValidation(req, res) {
   if (!accountNumber) {
     return res
       .status(400)
-      .json({ status: "failed", error: "Missing/Invalid account number" });
+      .json({ status: "failed", message: "Missing/Invalid account number" });
   }
 
   const accountsData = fetchAccountsData();
@@ -61,7 +71,7 @@ function accountValidation(req, res) {
   if (!account) {
     return res.status(404).json({
       status: "failed",
-      error: "Please reconfirm provided account number",
+      message: "Please reconfirm provided account number",
     });
   }
 
