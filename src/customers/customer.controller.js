@@ -29,7 +29,9 @@ function createAccount(req, res) {
   // Removing dob from the object response to the client
   delete createdAccount.dob;
 
-  res.json({ status: "Account created successfully", data: createdAccount });
+  res
+    .status(200)
+    .json({ status: "Account created successfully", data: createdAccount });
 }
 
 function accountValidation(req, res) {
