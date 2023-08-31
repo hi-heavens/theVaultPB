@@ -10,7 +10,7 @@ describe("Testing of the Customer Routes", () => {
       initialBalance: 500,
     });
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(201);
     expect(response.body.status).toBe("Account created successfully");
     expect(response.body.data).toHaveProperty("accountNumber");
   });

@@ -30,7 +30,7 @@ function createAccount(req, res) {
   delete createdAccount.dob;
 
   res
-    .status(200)
+    .status(201)
     .json({ status: "Account created successfully", data: createdAccount });
 }
 
@@ -55,7 +55,7 @@ function accountValidation(req, res) {
     });
   }
 
-  res.json({ status: "Successful", data: account });
+  res.status(200).json({ status: "Successful", data: account });
 }
 
 function getAllAccounts(req, res) {
