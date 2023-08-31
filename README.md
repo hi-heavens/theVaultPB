@@ -103,7 +103,6 @@ The API will be available at http://localhost:3000.
   "data": {
     "accountNumber": 4387510694,
     "holderName": "John Doe",
-    "dob": "1990-01-15",
     "accountType": "Savings",
     "balance": 0
   }
