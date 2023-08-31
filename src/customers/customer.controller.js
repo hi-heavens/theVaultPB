@@ -1,6 +1,7 @@
 const BankAccount = require("../models/customer.model");
 const saveAccount = require("../services/saveAccount");
 const fetchAccountsData = require("../services/fetchAccountsData");
+const isValidDate = require("../services/isValidDate");
 
 function createAccount(req, res) {
   const { holderName, dob, accountType, initialBalance } = req.body;
@@ -10,6 +11,14 @@ function createAccount(req, res) {
       .status(400)
       .json({ status: "failed", error: "Missing/Invalid input data" });
   }
+
+  const isValid = isValidDate(dob);
+  if (!isValid) {
+    return res
+      .status(400)
+      .json({ status: "failed", error: "Invalid date of birth" });
+  }
+
   if (initialBalance < 0) {
     return res.status(400).json({
       status: "failed",
