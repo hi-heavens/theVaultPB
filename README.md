@@ -2,6 +2,8 @@
 
 Welcome to the The Vault Payment Bank Account Management API! This project was created as part of an assessment task. The API provides a simple way to create and manage bank accounts. It's built using Node.js and Express.
 
+<p id='readme-top'></p>
+
 ## Table of Contents
 
 - [Getting Started](#getting-started)
@@ -12,6 +14,7 @@ Welcome to the The Vault Payment Bank Account Management API! This project was c
   - [Create a Bank Account](#create-a-bank-account)
   - [Resolve a Bank Account](#resolve-a-bank-account)
   - [Fetch All Bank Accounts](#fetch-all-bank-accounts)
+  - [Swagger Documentation](#swagger-documentation)
 - [Contribution](#contribution)
 - [Deployment](#deployment)
 
@@ -44,6 +47,8 @@ npm start
 ```
 
 The API will be available at http://localhost:3000.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## API Endpoints
 
@@ -112,6 +117,18 @@ The API will be available at http://localhost:3000.
 </p>
 <p><strong>Response:</strong> An array of JSON objects, each containing account details.</p>
 
+### Swagger Documentation
+
+<p>You can explore and interact with the API using Swagger documentation. To access the documentation, start the application and visit the following URL in a web browser:</p>
+
+```bash
+http://localhost:3000/swagger
+```
+
+Or via the deployed baseURL. [Swagger doc](https://the-vault-psb.onrender.com/swagger)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Contribution
 
 - Kehinde Adedokun
@@ -120,3 +137,5 @@ The API will be available at http://localhost:3000.
 ## Deployment
 
 The application has been deployed and is accessible at [baseURL](https://the-vault-psb.onrender.com/). When testing the deployed version, don't forget to add `api/v1` to the baseURL for accessing the API endpoints.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
