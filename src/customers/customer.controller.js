@@ -2,6 +2,7 @@ const BankAccount = require("../models/customer.model");
 const saveAccount = require("../services/saveAccount");
 const fetchAccountsData = require("../services/fetchAccountsData");
 const isValidDate = require("../services/isValidDate");
+const removeDOB = require("../services/removeDOB");
 
 function createAccount(req, res) {
   const { holderName, dob, accountType, initialBalance } = req.body;
@@ -70,6 +71,8 @@ function accountValidation(req, res) {
 function getAllAccounts(req, res) {
   const accountsData = fetchAccountsData();
 
+  // Removing dob from the object response to the client
+  removeDOB(accountsData);
   res.status(200).json({ status: "Successful", data: accountsData });
 }
 
