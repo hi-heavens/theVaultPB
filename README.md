@@ -105,4 +105,4 @@ The API will be available at http://localhost:3000.
 
 ## Deployment
 
-The application has been deployed and is accessible at [baseURL](). When testing the deployed version, don't forget to add `api/v1` to the baseURL for accessing the API endpoints.
+The application has been deployed and is accessible at [baseURL](https://the-vault-psb.onrender.com/). When testing the deployed version, don't forget to add `api/v1` to the baseURL for accessing the API endpoints.
