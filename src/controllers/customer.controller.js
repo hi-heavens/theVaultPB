@@ -29,7 +29,7 @@ function createAccount(req, res) {
   // Removing dob from the object response to the client
   delete createdAccount.dob;
 
-  res.json({ message: "Account created successfully", data: createdAccount });
+  res.json({ status: "Account created successfully", data: createdAccount });
 }
 
 function accountValidation(req, res) {
@@ -53,10 +53,17 @@ function accountValidation(req, res) {
     });
   }
 
-  res.json({ message: "Success", data: account });
+  res.json({ status: "Successful", data: account });
+}
+
+function getAllAccounts(req, res) {
+  const accountsData = fetchAccountsData();
+
+  res.status(200).json({ status: "Successful", data: accountsData });
 }
 
 module.exports = {
   createAccount,
   accountValidation,
+  getAllAccounts,
 };

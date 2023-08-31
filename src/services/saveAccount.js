@@ -1,9 +1,6 @@
 const fetchAccountsData = require("./fetchAccountsData");
 const updateAccountsData = require("./updateAccountsData");
-
-const generateAccountNumber = () => {
-  return Math.floor(1000000000 + Math.random() * 9000000000);
-};
+const generateAccountNumber = require("./generateAccountNumber");
 
 const saveAccount = (newAccount) => {
   const maxAttempts = 10;
