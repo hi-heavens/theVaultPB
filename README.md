@@ -50,6 +50,13 @@ The API will be available at http://localhost:3000.
 ### Create a Bank Account
 
 <p><strong>Endpoint:</strong> POST api/v1/create-account</p>
+<p>This endpoint allows users to create a new bank account. Users should send a JSON payload containing the following account details:</p>
+
+- Account holder name
+- Account holder DOB (Date of Birth) in the format: `YYYY-MM-DD`
+- Account type (Savings, Checking, etc.)
+- Initial balance
+
 <p><strong>Request Body:</strong></p>
 
 ```json
@@ -62,6 +69,9 @@ The API will be available at http://localhost:3000.
 ```
 
 <p><strong>Response:</strong> A JSON object with the generated account number and account details.</p>
+
+<p>The endpoint will return a unique 10-digit account number along with the holder's name, account type, and initial balance.
+</p>
 
 ```json
 {
@@ -78,6 +88,8 @@ The API will be available at http://localhost:3000.
 ### Resolve a Bank Account
 
 <p><strong>Endpoint:</strong> GET api/v1/account/:accountNumber</p>
+<p>This endpoint allows users to fetch the details of a bank account using its account number. Users should provide the account number as a parameter in the URL. The endpoint will respond with the account details if found.
+</p>
 <p><strong>Response:</strong> A JSON object with the account details associated with the provided account number.</p>
 
 ```json
@@ -96,6 +108,8 @@ The API will be available at http://localhost:3000.
 ### Fetch All Bank Accounts
 
 <p><strong>Endpoint:</strong> GET /get-accounts</p>
+<p>This endpoint returns a list of all bank accounts created so far. The response will include an array containing all account details.
+</p>
 <p><strong>Response:</strong> An array of JSON objects, each containing account details.</p>
 
 ## Contribution
