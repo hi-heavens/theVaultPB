@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+const fetchAccountsData = require("./fetchAccountsData");
+const updateAccountsData = require("./updateAccountsData");
 
 const generateAccountNumber = () => {
   return Math.floor(1000000000 + Math.random() * 9000000000);
@@ -11,7 +11,6 @@ const saveAccount = (newAccount) => {
 
   while (attempts < maxAttempts) {
     const accountsData = fetchAccountsData();
-
     // Check if the generated account number already exists
     const existingAccount = accountsData.find(
       (account) => account.accountNumber === newAccount.accountNumber
@@ -37,21 +36,4 @@ const saveAccount = (newAccount) => {
   );
 };
 
-const fetchAccountsData = () => {
-  const filePath = path.join(__dirname, "..", "data.json");
-  try {
-    const data = fs.readFileSync(filePath, "utf8");
-    return JSON.parse(data);
-  } catch (error) {
-    // If the file doesn't exist or is empty, return an empty array
-    return [];
-  }
-};
-
-const updateAccountsData = (data) => {
-  const filePath = path.join(__dirname, "..", "data.json");
-  const jsonData = JSON.stringify(data, null, 2);
-  fs.writeFileSync(filePath, jsonData, "utf8");
-};
-
-module.exports = { saveAccount };
+module.exports = saveAccount;
