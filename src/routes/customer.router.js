@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.post("/create-account", createAccount);
 router.get("/account/:accountNumber", accountValidation);
-router.get("/accounts", getAllAccounts);
+router.get("/get-accounts", getAllAccounts);
 
 module.exports = router;
