@@ -3,10 +3,11 @@ const saveAccount = require("../services/saveAccount");
 const fetchAccountsData = require("../services/fetchAccountsData");
 const isValidDate = require("../services/isValidDate");
 const removeDOB = require("../services/removeDOB");
+const { createAccount } = require("../models/customer.model");
 
 const validAccountTypes = ["Savings", "Checking", "Current"];
 
-function createAccount(req, res) {
+function createAccountController(req, res) {
   const { holderName, dob, accountType, initialBalance } = req.body;
 
   if (!holderName || !dob || !accountType || initialBalance === undefined) {
@@ -37,24 +38,24 @@ function createAccount(req, res) {
     });
   }
 
-  const createdAccount = new BankAccount(
+  const newAccount = createAccount(
     holderName,
     dob,
     accountType,
     initialBalance
   );
 
-  saveAccount(createdAccount);
+  saveAccount(newAccount);
 
   // Removing dob from the object response to the client
-  delete createdAccount.dob;
+  const { dob: _, ...responseAccount } = newAccount;
 
   res
     .status(201)
-    .json({ status: "Account created successfully", data: createdAccount });
+    .json({ status: "Account created successfully", data: responseAccount });
 }
 
-function accountValidation(req, res) {
+function accountValidationController(req, res) {
   const { accountNumber } = req.params;
 
   if (!accountNumber) {
@@ -74,8 +75,9 @@ function accountValidation(req, res) {
       message: "Please reconfirm provided account number",
     });
   }
+  const { dob: _, ...responseAccount } = account;
 
-  res.status(200).json({ status: "Successful", data: account });
+  res.status(200).json({ status: "Successful", data: responseAccount });
 }
 
 function getAllAccounts(req, res) {
@@ -87,7 +89,7 @@ function getAllAccounts(req, res) {
 }
 
 module.exports = {
-  createAccount,
-  accountValidation,
+  createAccountController,
+  accountValidationController,
   getAllAccounts,
 };

@@ -1,7 +1,7 @@
 const express = require("express");
 const {
-  createAccount,
-  accountValidation,
+  createAccountController,
+  accountValidationController,
   getAllAccounts,
 } = require("./customer.controller");
 
@@ -39,7 +39,7 @@ const router = express.Router();
  *         description: Account successfully created.
  */
 
-router.post("/create-account", createAccount);
+router.post("/create-account", createAccountController);
 
 /**
  * @swagger
@@ -58,7 +58,7 @@ router.post("/create-account", createAccount);
  *       200:
  *         description: Account Retrieved Successfully.
  */
-router.get("/account/:accountNumber", accountValidation);
+router.get("/account/:accountNumber", accountValidationController);
 
 /**
  * @swagger

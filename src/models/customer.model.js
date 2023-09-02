@@ -1,13 +1,16 @@
 const generateAccountNumber = require("../services/generateAccountNumber");
 
-class BankAccount {
-  constructor(holderName, dob, accountType, initialBalance) {
-    this.accountNumber = generateAccountNumber();
-    this.holderName = holderName;
-    this.dob = dob;
-    this.accountType = accountType;
-    this.balance = initialBalance;
-  }
+// Create a new bank account and return it
+function createAccount(holderName, dob, accountType, initialBalance) {
+  const accountNumber = generateAccountNumber();
+  const account = {
+    accountNumber,
+    holderName,
+    dob,
+    accountType,
+    balance: initialBalance,
+  };
+  return account;
 }
 
-module.exports = BankAccount;
+module.exports = { createAccount };
