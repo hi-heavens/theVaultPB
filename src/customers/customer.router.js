@@ -4,6 +4,7 @@ const {
   accountValidationController,
   getAllAccountsController,
 } = require("./customer.controller");
+const createAccountValidation = require("../services/createAccountValidation");
 
 const router = express.Router();
 
@@ -39,7 +40,11 @@ const router = express.Router();
  *         description: Account successfully created.
  */
 
-router.post("/create-account", createAccountController);
+router.post(
+  "/create-account",
+  createAccountValidation,
+  createAccountController
+);
 
 /**
  * @swagger
@@ -62,7 +67,7 @@ router.get("/account/:accountNumber", accountValidationController);
 
 /**
  * @swagger
- * /api/v1/get-accounts:
+ * /api/v1/accounts:
  *   get:
  *     tags:
  *        - Vault Payment Bank Account Management API
@@ -71,6 +76,6 @@ router.get("/account/:accountNumber", accountValidationController);
  *       200:
  *         description: Accounts Retrieved Successfully.
  */
-router.get("/get-accounts", getAllAccountsController);
+router.get("/accounts", getAllAccountsController);
 
 module.exports = router;

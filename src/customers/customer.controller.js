@@ -1,90 +1,78 @@
+const { validationResult } = require("express-validator");
 const saveAccount = require("../services/saveAccount");
 const fetchAccountsData = require("../services/fetchAccountsData");
 const isValidDate = require("../services/isValidDate");
 const removeDOB = require("../services/removeDOB");
 const { createAccount } = require("../models/customer.model");
 
-const validAccountTypes = ["Savings", "Checking", "Current"];
-
 function createAccountController(req, res) {
-  const { holderName, dob, accountType, initialBalance } = req.body;
+  try {
+    const errors = validationResult(req);
+    const { holderName, dob, accountType, initialBalance } = req.body;
 
-  if (!holderName || !dob || !accountType || initialBalance === undefined) {
-    return res
-      .status(400)
-      .json({ status: "failed", message: "Missing/Invalid input data" });
+    if (!errors.isEmpty()) {
+      const errorArr = errors.array()[0];
+      throw new Error(
+        `${errorArr.msg}: '${errorArr.value}' in ${errorArr.path}`
+      );
+    }
+
+    if (initialBalance < 0) {
+      throw new Error("Initial balance cannot be less than 0");
+    }
+
+    const newAccount = createAccount(
+      holderName,
+      dob,
+      accountType,
+      initialBalance
+    );
+
+    saveAccount(newAccount);
+
+    // Removing dob from the object response to the client
+    const { dob: _, ...responseAccount } = newAccount;
+
+    res.status(201).json({ status: true, data: responseAccount });
+  } catch (error) {
+    return res.status(400).json({ status: false, message: error.message });
   }
-
-  const isValid = isValidDate(dob);
-  if (!isValid) {
-    return res
-      .status(400)
-      .json({ status: "failed", message: "Invalid date of birth" });
-  }
-
-  if (!validAccountTypes.includes(accountType)) {
-    return res.status(400).json({
-      status: "failed",
-      message:
-        "Invalid account type. Valid account types are Savings, Checking, Current",
-    });
-  }
-
-  if (initialBalance < 0) {
-    return res.status(400).json({
-      status: "failed",
-      message: "Initial balance cannot be less than 0",
-    });
-  }
-
-  const newAccount = createAccount(
-    holderName,
-    dob,
-    accountType,
-    initialBalance
-  );
-
-  saveAccount(newAccount);
-
-  // Removing dob from the object response to the client
-  const { dob: _, ...responseAccount } = newAccount;
-
-  res
-    .status(201)
-    .json({ status: "Account created successfully", data: responseAccount });
 }
 
 function accountValidationController(req, res) {
   const { accountNumber } = req.params;
 
-  if (!accountNumber) {
-    return res
-      .status(400)
-      .json({ status: "failed", message: "Missing/Invalid account number" });
+  try {
+    if (!accountNumber) {
+      throw new Error("Missing/Invalid account number");
+    }
+
+    const accountsData = fetchAccountsData();
+    const account = accountsData.find(
+      (account) => account.accountNumber === accountNumber
+    );
+
+    if (!account) {
+      throw new Error("Please reconfirm provided account number");
+    }
+    // Removing dob from the object response to the client
+    const { dob: _, ...responseAccount } = account;
+
+    res.status(200).json({ status: true, data: responseAccount });
+  } catch (error) {
+    return res.status(400).json({ status: false, message: error.message });
   }
-
-  const accountsData = fetchAccountsData();
-  const account = accountsData.find(
-    (account) => account.accountNumber === Number(accountNumber)
-  );
-
-  if (!account) {
-    return res.status(404).json({
-      status: "failed",
-      message: "Please reconfirm provided account number",
-    });
-  }
-  const { dob: _, ...responseAccount } = account;
-
-  res.status(200).json({ status: "Successful", data: responseAccount });
 }
 
 function getAllAccountsController(req, res) {
-  const accountsData = fetchAccountsData();
-
-  // Removing dob from the object response to the client
-  removeDOB(accountsData);
-  res.status(200).json({ status: "Successful", data: accountsData });
+  try {
+    const accountsData = fetchAccountsData();
+    // Removing dob from the object response
+    removeDOB(accountsData);
+    res.status(200).json({ status: true, data: accountsData });
+  } catch (error) {
+    res.status(500).json({ status: false, message: "Internal server error" });
+  }
 }
 
 module.exports = {
