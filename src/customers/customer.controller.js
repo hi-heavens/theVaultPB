@@ -1,4 +1,3 @@
-const BankAccount = require("../models/customer.model");
 const saveAccount = require("../services/saveAccount");
 const fetchAccountsData = require("../services/fetchAccountsData");
 const isValidDate = require("../services/isValidDate");
@@ -80,7 +79,7 @@ function accountValidationController(req, res) {
   res.status(200).json({ status: "Successful", data: responseAccount });
 }
 
-function getAllAccounts(req, res) {
+function getAllAccountsController(req, res) {
   const accountsData = fetchAccountsData();
 
   // Removing dob from the object response to the client
@@ -91,5 +90,5 @@ function getAllAccounts(req, res) {
 module.exports = {
   createAccountController,
   accountValidationController,
-  getAllAccounts,
+  getAllAccountsController,
 };

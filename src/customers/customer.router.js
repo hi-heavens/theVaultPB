@@ -2,7 +2,7 @@ const express = require("express");
 const {
   createAccountController,
   accountValidationController,
-  getAllAccounts,
+  getAllAccountsController,
 } = require("./customer.controller");
 
 const router = express.Router();
@@ -71,6 +71,6 @@ router.get("/account/:accountNumber", accountValidationController);
  *       200:
  *         description: Accounts Retrieved Successfully.
  */
-router.get("/get-accounts", getAllAccounts);
+router.get("/get-accounts", getAllAccountsController);
 
 module.exports = router;
