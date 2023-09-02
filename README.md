@@ -111,7 +111,7 @@ The API will be available at http://localhost:3000.
 
 ### Fetch All Bank Accounts
 
-<p><strong>Endpoint:</strong> GET /get-accounts</p>
+<p><strong>Endpoint:</strong> GET /accounts</p>
 <p>This endpoint returns a list of all bank accounts created so far. The response will include an array containing all account details.
 </p>
 <p><strong>Response:</strong> An array of JSON objects, each containing account details.</p>
