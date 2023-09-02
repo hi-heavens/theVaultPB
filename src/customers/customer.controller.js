@@ -67,11 +67,14 @@ function accountValidationController(req, res) {
 function getAllAccountsController(req, res) {
   try {
     const accountsData = fetchAccountsData();
+    if (!accountsData.length) {
+      throw new Error("No account found");
+    }
     // Removing dob from the object response
     removeDOB(accountsData);
     res.status(200).json({ status: true, data: accountsData });
   } catch (error) {
-    res.status(500).json({ status: false, message: "Internal server error" });
+    res.status(500).json({ status: false, message: error.message });
   }
 }
 
